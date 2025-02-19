@@ -9,37 +9,39 @@ import {
   PaginationPrevious,
 } from "./ui/pagination"
 
-// type Movie = {
-//   id: number
-//   title: string
-//   year: number
-//   poster: string
-// }
-
-// type MovieListProps = {
-//   movies: Movie[]
-//   onAddMovie?: (movie: Movie) => void
-// }
-
 export default function MovieList({ movies, onAddMovie, onDeleteMovie, uid }) {
   const [currentPage, setCurrentPage] = React.useState(1)
   const moviesPerPage = 10
-  
-  if (movies.length === 0) {
-    return <p className="text-center text-black mt-4">No movies found.</p>
-  }
-
   const indexOfLastMovie = currentPage * moviesPerPage
   const indexOfFirstMovie = indexOfLastMovie - moviesPerPage
   const currentMovies = movies.slice(indexOfFirstMovie, indexOfLastMovie)
   const totalPages = Math.ceil(movies.length / moviesPerPage)
+
+  console.log({
+    total: movies.length,
+    currentPage,
+    indexOfFirstMovie,
+    indexOfLastMovie,
+    currentMoviesLength: currentMovies.length
+  });
+
+  // Add this before the return statement to check for duplicates
+  console.log('Movie IDs:', currentMovies.map(movie => movie.id));
+
+  React.useEffect(() => {
+    setCurrentPage(1);
+  }, [movies]);
+
+  if (movies.length === 0) {
+    return <p className="text-center text-black mt-4">No movies found.</p>
+  }
 
   return (
     <div className="space-y-6">
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
         {currentMovies.map((movie) => (
           <MovieCard 
-            key={movie.id} 
+            key={`${movie.id}-${movie.title}`}
             movie={movie} 
             onAddMovie={onAddMovie} 
             onDeleteMovie={onDeleteMovie} 

@@ -1,18 +1,9 @@
 import { Button } from "@/components/ui/button"
-
-// type Movie = {
-//   id: number
-//   title: string
-//   year: number
-//   poster: string
-// }
-
-// type MovieCardProps = {
-//   movie: Movie
-//   onAddMovie?: (movie: Movie) => void
-// }
+import { useState } from "react"
 
 export default function MovieCard({ movie, onAddMovie, onDeleteMovie, uid }) {
+  const [selectedStatus, setSelectedStatus] = useState(null);
+
   return (
     <div className="bg-white shadow-md rounded-lg overflow-hidden max-w-[250px] flex flex-col">
       <img
@@ -27,9 +18,29 @@ export default function MovieCard({ movie, onAddMovie, onDeleteMovie, uid }) {
         </div>
         <div className="mt-4">
           {onAddMovie && (
-            <Button onClick={() => onAddMovie(movie)} className="w-full">
-              Add to Watched
-            </Button>
+            <>
+              <select
+                className="w-full p-2 mb-2 border rounded-md"
+                onChange={(e) => setSelectedStatus(e.target.value)}
+                value={selectedStatus || ""}
+              >
+                <option value="" disabled>Add to list...</option>
+                <option value="watched">Watched</option>
+                <option value="watching">Currently Watching</option>
+                <option value="plantowatch">Want to Watch</option>
+              </select>
+              {selectedStatus && (
+                <Button 
+                  className="w-full mb-2" 
+                  onClick={() => {
+                    onAddMovie(movie, selectedStatus);
+                    setSelectedStatus("");
+                  }}
+                >
+                  Add to {selectedStatus}
+                </Button>
+              )}
+            </>
           )}
           {onDeleteMovie && (
             <Button variant="destructive" onClick={() => onDeleteMovie(movie.docId)} className="w-full">
@@ -41,4 +52,3 @@ export default function MovieCard({ movie, onAddMovie, onDeleteMovie, uid }) {
     </div>
   )
 }
-
