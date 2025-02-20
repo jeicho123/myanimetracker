@@ -4,8 +4,10 @@ import { cn } from "@/lib/utils";
 const navItems = [
   { href: "/", label: "All Anime" },
   { href: "/popular", label: "Popular Anime" },
+  { href: "/airing", label: "Airing" },
   { href: "/watched", label: "Watched" },
   { href: "/watching", label: "Currently Watching" },
+  { href: "/plantowatch", label: "Plan to Watch" },
 ];
 
 export function Navbar() {

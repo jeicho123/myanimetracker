@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button"
 import { useState } from "react"
 
-export default function MovieCard({ movie, onAddMovie, onDeleteMovie, uid }) {
+export default function MovieCard({ movie, onAddMovie, onDeleteMovie, onSwitchMovie, uid }) {
   const [selectedStatus, setSelectedStatus] = useState(null);
 
   return (
@@ -25,9 +25,9 @@ export default function MovieCard({ movie, onAddMovie, onDeleteMovie, uid }) {
                 value={selectedStatus || ""}
               >
                 <option value="" disabled>Add to list...</option>
-                <option value="watched">Watched</option>
-                <option value="watching">Currently Watching</option>
-                <option value="plantowatch">Want to Watch</option>
+                <option value="Watched">Watched</option>
+                <option value="Watching">Currently Watching</option>
+                <option value="Plan To Watch">Plan to Watch</option>
               </select>
               {selectedStatus && (
                 <Button 
@@ -38,6 +38,28 @@ export default function MovieCard({ movie, onAddMovie, onDeleteMovie, uid }) {
                   }}
                 >
                   Add to {selectedStatus}
+                </Button>
+              )}
+            </>
+          )}
+          {onSwitchMovie && (
+            <>
+              <select
+                className="w-full p-2 mb-2 border rounded-md"
+                onChange={(e) => setSelectedStatus(e.target.value)}
+                value={selectedStatus || ""}
+              >
+                <option value="" disabled>Switch to...</option>
+                {movie.status !== "Watched" && <option value="Watched">Watched</option>}
+                {movie.status !== "Watching" && <option value="Watching">Currently Watching</option>}
+                {movie.status !== "Plan To Watch" && <option value="Plan To Watch">Plan to Watch</option>}
+              </select>
+              {selectedStatus && (
+                <Button 
+                  className="w-full mb-2" 
+                  onClick={() => onSwitchMovie(movie, selectedStatus)}
+                >
+                  Switch to {selectedStatus}
                 </Button>
               )}
             </>

@@ -1,5 +1,5 @@
 import * as React from "react"
-import MovieCard from "./moviecard"
+import MovieCard from "./MovieCard"
 import {
   Pagination,
   PaginationContent,
@@ -9,24 +9,13 @@ import {
   PaginationPrevious,
 } from "./ui/pagination"
 
-export default function MovieList({ movies, onAddMovie, onDeleteMovie, uid }) {
+export default function MovieList({ movies, onAddMovie, onDeleteMovie, onSwitchMovie, uid }) {
   const [currentPage, setCurrentPage] = React.useState(1)
   const moviesPerPage = 10
   const indexOfLastMovie = currentPage * moviesPerPage
   const indexOfFirstMovie = indexOfLastMovie - moviesPerPage
   const currentMovies = movies.slice(indexOfFirstMovie, indexOfLastMovie)
   const totalPages = Math.ceil(movies.length / moviesPerPage)
-
-  console.log({
-    total: movies.length,
-    currentPage,
-    indexOfFirstMovie,
-    indexOfLastMovie,
-    currentMoviesLength: currentMovies.length
-  });
-
-  // Add this before the return statement to check for duplicates
-  console.log('Movie IDs:', currentMovies.map(movie => movie.id));
 
   React.useEffect(() => {
     setCurrentPage(1);
@@ -44,6 +33,7 @@ export default function MovieList({ movies, onAddMovie, onDeleteMovie, uid }) {
             key={`${movie.id}-${movie.title}`}
             movie={movie} 
             onAddMovie={onAddMovie} 
+            onSwitchMovie={onSwitchMovie}
             onDeleteMovie={onDeleteMovie} 
             uid={uid} 
           />

@@ -5,15 +5,18 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import { Provider } from 'react-redux'
 import { store } from './store/store'
 
-import App from './pages/App.jsx'
+import All from './pages/All.jsx'
 import NotFoundPage from './pages/NotFoundPage.jsx'
 import Popular from './pages/Popular.jsx'
 import Watched from './pages/Watched.jsx'
+import Airing from './pages/Airing.jsx'
+import Watching from './pages/Watching.jsx'
+import PlanToWatch from './pages/PlanToWatch.jsx'
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <App />,
+    element: <All />,
   },
   {
     path: "*",
@@ -24,8 +27,20 @@ const router = createBrowserRouter([
     element: <Popular />,
   },
   {
+    path: "/airing",
+    element: <Airing />,
+  },
+  {
     path: "/watched",
     element: <Watched />,
+  },
+  {
+    path: "/watching",
+    element: <Watching />,
+  },
+  {
+    path: "/plantowatch",
+    element: <PlanToWatch />,
   },
 ])
 
